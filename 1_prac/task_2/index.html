@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Oil Calculator</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="wrapper-center">
+      <div>
+        <h1>Калькулятор мазуту</h1>
+
+        {{if .Error}}
+        <p style="color: red">{{.Error}}</p>
+        {{end}}
+
+        <form method="POST">
+          <label>C, %:</label>
+          <input
+            type="number"
+            name="C"
+            step="0.01"
+            value="{{.C}}"
+          /><br /><br />
+          <label>H, %:</label>
+          <input
+            type="number"
+            name="H"
+            step="0.01"
+            value="{{.H}}"
+          /><br /><br />
+          <label>O, %:</label>
+          <input
+            type="number"
+            name="O"
+            step="0.01"
+            value="{{.O}}"
+          /><br /><br />
+          <label>S, %:</label>
+          <input
+            type="number"
+            name="S"
+            step="0.01"
+            value="{{.S}}"
+          /><br /><br />
+          <label>Q<sub>i</sub><sup>г</sup>, МДж/кг:</label>
+          <input
+            type="number"
+            name="Q"
+            step="0.01"
+            value="{{.Q}}"
+          /><br /><br />
+          <label>Вологість, %:</label>
+          <input
+            type="number"
+            name="V"
+            step="0.01"
+            value="{{.V}}"
+          /><br /><br />
+          <label>Зольність, %:</label>
+          <input
+            type="number"
+            name="A"
+            step="0.01"
+            value="{{.A}}"
+          /><br /><br />
+          <label>Ванадій, мг/кг:</label>
+          <input
+            type="number"
+            name="W"
+            step="0.01"
+            value="{{.W}}"
+          /><br /><br />
+
+          <input type="submit" value="Обчислити" />
+        </form>
+
+        {{if .HasResult}}
+        <div
+          class="result"
+          style="margin-top: 20px; padding: 15px; background: #e7f3fe"
+        >
+          <h3>Результати:</h3>
+          <p class="answer-label">Склад робочої маси мазуту:</p>
+          <p>
+            H<sup>P</sup> = {{printf "%.2f" .Hr}}%, O<sup>P</sup> = {{printf
+            "%.2f" .Or}}%, V<sup>P</sup> = {{printf "%.2f" .Wr}} мг/кг, A<sup
+              >P</sup
+            >
+            = {{printf "%.2f" .Ar}}%, S<sup>P</sup> = {{printf "%.2f" .Sr}}%,
+            C<sup>P</sup> = {{printf "%.2f" .Cr}}%
+          </p>
+          <p class="answer-label">
+            Нижча теплота згоряння мазуту (Q<sup>r</sup><sub>i</sub>), МДж/кг =
+            <strong>{{printf "%.2f" .Qr}}</strong>
+          </p>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>

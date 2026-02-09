@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fuel Calculator</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="wrapper-center">
+      <div>
+        <h1>Калькулятор палива</h1>
+
+        {{if .Error}}
+        <p class="error">{{.Error}}</p>
+        {{end}}
+
+        <form method="POST">
+          <label>H %:</label>
+          <input type="number" name="H" step="0.01" value="{{.H}}" /><br />
+          <label>C %:</label>
+          <input type="number" name="C" step="0.01" value="{{.C}}" /><br />
+          <label>S %:</label>
+          <input type="number" name="S" step="0.01" value="{{.S}}" /><br />
+          <label>N %:</label>
+          <input type="number" name="N" step="0.01" value="{{.N}}" /><br />
+          <label>O %:</label>
+          <input type="number" name="O" step="0.01" value="{{.O}}" /><br />
+          <label>W %:</label>
+          <input type="number" name="W" step="0.01" value="{{.W}}" /><br />
+          <label>A %:</label>
+          <input
+            type="number"
+            name="A"
+            step="0.01"
+            value="{{.A}}"
+          /><br /><br />
+          <input type="submit" value="Обчислити" />
+        </form>
+
+        {{if .HasResult}}
+        <div class="result">
+          <h3>Результати розрахунку:</h3>
+          <p>
+            Коефіцієнт K<sup>PC</sup>: <strong>{{printf "%.2f" .Kpc}}</strong>
+          </p>
+          <p>
+            Коефіцієнт K<sup>PГ</sup>: <strong>{{printf "%.2f" .Kpg}}</strong>
+          </p>
+          <p>
+            Q<sup>P</sup><sub>H</sub>:
+            <strong>{{printf "%.2f" .Qph}} МДж/кг</strong>
+          </p>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </body>
+</html>
