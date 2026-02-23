@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Mazut calculator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Веб калькулятор для розрахунку валових викидів</h1>
+  <div class="calculator">
+    <form method="POST">
+      <div class="input-fields">
+        <label for="coal">Донецьке газове вугілля марки ГР (т):</label>
+        <input type="number" step="any" name="coal" id="coal" value="{{.Coal}}">
+        
+        <label for="mazut">Високосірчистий мазут марки 40 (т):</label>
+        <input type="number" step="any" name="mazut" id="mazut" value="{{.Mazut}}">
+        
+        <label for="gas">Природний газ (тис. м³):</label>
+        <input type="number" step="any" name="gas" id="gas" value="{{.Gas}}">
+      </div>
+      <button type="submit">Обрахувати</button>
+    </form>
+
+    {{if .HasResults}}
+    <div class="output-fields">
+      <p>Показник емісії (вугілля): <span>{{.CoalEm}}</span> г/ГДж</p>
+      <p>Валовий викид (вугілля): <span>{{.CoalTotal}}</span> т.</p>
+      <p>Показник емісії (мазут): <span>{{.MazutEm}}</span> г/ГДж</p>
+      <p>Валовий викид (мазут): <span>{{.MazutTotal}}</span> т.</p>
+      <p>Показник емісії (газ): <span>{{.GasEm}}</span> г/ГДж</p>
+      <p>Валовий викид (газ): <span>{{.GasTotal}}</span> т.</p>
+    </div>
+    {{end}}
+  </div>
+</body>
+</html>

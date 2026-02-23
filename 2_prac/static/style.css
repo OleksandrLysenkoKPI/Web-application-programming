@@ -1,0 +1,75 @@
+body {
+    height: 100vh;
+    font-family: monospace, sans-serif;
+    text-shadow: rgb(255, 0, 144) 1px 0 10px;
+    background: linear-gradient(45deg, #4b785a, #16a947);
+    background-repeat: no-repeat;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .calculator {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .input-fields label {
+    display: block;
+    margin-left: 100px;
+    text-shadow: rgb(0, 221, 255) 1px 0 10px;
+    margin-bottom: 4px;
+  }
+  
+  .input-fields input {
+    width: 60%;
+    padding: 8px;
+    margin-left: 100px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  @keyframes sizeChange {
+    0% { background-color: #112A46;
+        transform: scale(1);}
+    50% { background-color: #7b2f90;
+        transform: scale(1.2);}
+    100% { background-color: #ca3351; }
+}
+
+  button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #112A46;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.700ms, background-color 0.3s;
+  }
+  
+  button:hover {
+    animation: sizeChange 0.7s linear forwards;
+  }
+  
+  button:active {
+    transform: scale(0.9);
+  }
+
+  .output-fields p {
+    margin-bottom: 5px;
+    text-shadow: rgb(5, 57, 65) 1px 0 10px;
+  }
+  
+  .output-fields span {
+    font-weight: bold;
+    text-shadow: 1px 1px 2px red;
+  }
