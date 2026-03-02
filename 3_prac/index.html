@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Розрахунок прибутку СЕС</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Обрахунок прибутку електростанції</h1>
+    <div class="calculator">
+        <form method="POST">
+            <div class="input-fields">
+                <label>Середньодобова потужність (P<sub>C</sub>):</label>
+                <input type="number" step="any" name="avr_power" required>
+                
+                <label>Середньоквадратичне відхилення (&sigma;<sub>1</sub>):</label>
+                <input type="number" step="any" name="sigma_val_1" required>
+                
+                <label>Вартість електроенергії (грн):</label>
+                <input type="number" step="any" name="electricity_price" required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="calculate">Обрахувати</button>
+            </div>
+        </form>
+
+        {{if .HasResult}}
+        <button class="collapsible active">Результати розрахунків:</button>
+        <div class="content" style="max-height: 1000px;">
+            <p>Нормальний закон розподілу потужності (p<sub>d</sub>): <span>{{.NormLaw}}</span>;</p>
+            <p>Частка електроенергії без небалансів (&delta;<sub>W1</sub>): <span>{{.DeltaW1}}</span>%;</p>
+            <p>W<sub>1</sub>: <span>{{.W1}}</span> МВт*год;</p>
+            <p>Прибуток (П<sub>1</sub>): <span>{{.Income1}}</span> тис. грн;</p>
+            <p>Штраф (Ш<sub>1</sub>): <span>{{.Fine1}}</span> тис. грн;</p>
+            <hr>
+            <p><b>З системою прогнозування:</b></p>
+            <p>Частка електроенергії без небалансів (&delta;<sub>W2</sub>): <span>{{.DeltaW2}}</span>%;</p>
+            <p>Прибуток (П<sub>2</sub>): <span>{{.Income2}}</span> тис. грн;</p>
+            <p>Штраф (Ш<sub>2</sub>): <span>{{.Fine2}}</span> тис. грн;</p>
+            <p><b><i>Відповідь:</i></b> Чистий прибуток П = <span>{{.IncomeFinale}}</span> тис. грн;</p>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>
