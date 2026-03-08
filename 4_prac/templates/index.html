@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Енерго-калькулятор</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Комплексний розрахунок енергосистем</h1>
+        <form method="POST">
+            <div class="grid">
+                <div class="card">
+                    <h2>1. Вибір кабелів</h2>
+                    <label>S<sub>m</sub>:</label> <input type="number" step="any" name="s_m" value="1300">
+                    <label>I<sub>к</sub>:</label> <input type="number" step="any" name="i_k" value="2500">
+                    <label>t<sub>ф</sub>:</label> <input type="number" step="any" name="t_f" value="2.5">
+                </div>
+                <div class="card">
+                    <h2>2. Струми КЗ ГПП</h2>
+                    <label>S<sub>K</sub>:</label> <input type="number" step="any" name="s_k" value="200">
+                </div>
+            </div>
+
+            <div class="card full">
+                <h2>3. Розрахунок ХПнЕМ</h2>
+                <div class="grid">
+                    <div>
+                        <label>R<sub>с.н.</sub>:</label><input type="number" step="any" name="r_sn" value="10.65">
+                        <label>X<sub>с.н.</sub>:</label><input type="number" step="any" name="x_sn" value="24.02">
+                    </div>
+                    <div>
+                        <label>R<sub>с.н.min</sub>:</label><input type="number" step="any" name="r_sn_min" value="34.88">
+                        <label>X<sub>с.н.min</sub>:</label><input type="number" step="any" name="x_sn_min" value="65.68">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Виконати розрахунок</button>
+        </form>
+
+        {{if .Calculated}}
+        <div class="results-box">
+            <h3>Результати:</h3>
+            <div class="res-item"><b>Кабелі:</b> I<sub>m</sub>={{.Task1.Im}}A; I<sub>m.pa</sub>={{.Task1.Impa}}A; S<sub>ек</sub>={{.Task1.Sek}}мм²; s ≥ {{.Task1.Smin}}мм²</div>
+            <div class="res-item"><b>ГПП:</b> X<sub>c</sub>={{.Task2.Xc}}Ом; X<sub>t</sub>={{.Task2.Xt}}Ом; I<sub>p0</sub>={{.Task2.Ip0}}кА</div>
+            <hr>
+            <h4>ХПнЕМ (Струми КЗ):</h4>
+            <div class="res-grid">
+                <div><b>110кВ:</b> I<sup>(3)</sup>={{.Task3.Ish3}}A; I<sup>(2)</sup>={{.Task3.Ish2}}A</div>
+                <div><b>10кВ:</b> I<sup>(3)</sup>={{.Task3.Ishn3}}A; I<sup>(2)</sup>={{.Task3.Ishn2}}A</div>
+                <div><b>Лінія:</b> I<sup>(3)</sup>={{.Task3.Iln3}}A; I<sup>(2)</sup>={{.Task3.Iln2}}A</div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>
