@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Reliability Calculator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Розрахунок надійності</h1>
+  <div class="calculator">
+    <form method="POST">
+      <div class="input-fields">
+        <label>Кількість приєднань:</label>
+        <input type="number" step="any" name="connection" id="n" value="{{.N}}" required>
+        <label>Ціна кВт*год (аварійні):</label>
+        <input type="number" step="any" name="accident_price" id="ap" value="{{.AcPrice}}" required>
+        <label>Ціна кВт*год (планові):</label>
+        <input type="number" step="any" name="planed_price" id="pp" value="{{.PlPrice}}" required>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="calculate">Обрахувати</button>
+        <button type="button" class="calculate" onclick="fillExample()">Контрольний приклад</button>
+      </div>
+    </form>
+
+    {{if .ShowResults}}
+    <button class="collapsible">Результати розрахунків:</button>
+    <div class="content">
+      <p>Частота відмов одноколової: <span>{{.Results.Woc}}</span> рік<sup>-1</sup></p>
+      <p>Сер. тривалість відновлення: <span>{{.Results.TvOc}}</span> год</p>
+      <p>Коеф. аварійного простою: <span>{{.Results.KaOc}}</span></p>
+      <p>Коеф. планового простою: <span>{{.Results.KpOc}}</span></p>
+      <p>Частота подвійних відмов: <span>{{.Results.Wdk}}</span></p>
+      <p>Відмови з секц. вимикачем: <span>{{.Results.Wdc}}</span></p>
+      <hr>
+      <p>Мат. сп. аварійного недовідп.: <span>{{.Results.MathNedA}}</span> кВт*год</p>
+      <p>Мат. сп. планового недовідп.: <span>{{.Results.MathNedP}}</span> кВт*год</p>
+      <p>Мат. сподівання збитків: <span>{{.Results.MathLosses}}</span> грн</p>
+    </div>
+    {{end}}
+  </div>
+
+  <script>
+    function initCollapsible() {
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+            } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+        }
+    }
+
+    function autoOpenResults() {
+        var btn = document.querySelector('.collapsible');
+        if (btn) {
+        btn.click();
+        }
+    }
+
+    function fillExample() {
+        document.getElementById('n').value = 6;
+        document.getElementById('ap').value = 23.6;
+        document.getElementById('pp').value = 17.6;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initCollapsible();
+        {{if .ShowResults}}
+        autoOpenResults();
+        {{end}}
+    });
+</script>
+</body>
+</html>
