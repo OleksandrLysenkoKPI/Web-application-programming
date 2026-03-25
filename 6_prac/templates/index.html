@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Electric Load Calculator - Go</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Веб калькулятор для розрахунку електричних навантажень</h1>
+  <div class="calculator">
+    <form method="POST">
+      <div class="input-fields">
+        <label for="power">Номінальна потужність ЕП (Pn):</label>
+        <input type="number" step="any" name="power" id="power" value="{{.Pn}}" required>
+        <label for="coef">Коефіцієнт використання (Kv):</label>
+        <input type="number" step="any" name="coef" id="coef" value="{{.Kv}}" required>
+        <label for="tan">Коефіцієнт реактивної потужності (tg φ):</label>
+        <input type="number" step="any" name="tan" id="tan" value="{{.Tg}}" required>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="calculate">Обрахувати</button>
+        <button type="button" class="calculate" onclick="putExampleValues()">Контрольний приклад</button>
+      </div>
+    </form>
+
+    {{if .ShowResults}}
+    <button class="collapsible">Розрахункові навантаження цеху</button>
+    <div class="content">
+      <p>Груповий коефіцієнт використання для ШР1=ШР2=ШР3: <span>{{.Results.GroupKv}}</span></p>
+      <p>Ефективна кількість ЕП для ШР1=ШР2=ШР3: <span>{{.Results.EffectiveEP}}</span></p>
+      <p>Розрахунковий коефіцієнт активної потужності: <span>{{.Results.ActivePowerCoef}}</span></p>
+      <p>Розрахункове активне навантаження: <span>{{.Results.EstActLoad}}</span> кВт</p>
+      <p>Розрахункове реактивне навантаження: <span>{{.Results.EstReactLoad}}</span> квар</p>
+      <p>Повна потужність: <span>{{.Results.FullPower}}</span> кВ*А</p>
+      <p>Розрахунковий груповий струм: <span>{{.Results.GroupElectricity}}</span> А</p>
+      <hr>
+      <p>Коефіцієнти використання цеху в цілому: <span>{{.Results.TotalKv}}</span></p>
+      <p>Ефективна кількість ЕП цеху: <span>{{.Results.TotalEffectiveEP}}</span></p>
+      <p>Розрахунковий активний навантаження на шинах: <span>{{.Results.EstTireActLoad}}</span> кВт</p>
+      <p>Розрахункове реактивне навантаження на шинах: <span>{{.Results.EstTireReactLoad}}</span> квар</p>
+      <p>Повна потужність на шинах: <span>{{.Results.FullTirePower}}</span> кВ*А</p>
+      <p>Розрахунковий струм на шинах 0,38 кВ ТП: <span>{{.Results.TireGroupElectricity}}</span> А</p>
+    </div>
+    {{end}}
+  </div>
+
+  <script>
+    function putExampleValues() {
+      document.getElementById('power').value = 20;
+      document.getElementById('coef').value = 0.2;
+      document.getElementById('tan').value = 1.52;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var coll = document.getElementsByClassName("collapsible");
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+      
+      {{if .ShowResults}}
+      document.querySelector(".collapsible").click();
+      {{end}}
+    });
+  </script>
+</body>
+</html>
